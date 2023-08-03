@@ -3,6 +3,7 @@
 filtered logger file for personal data
 """
 import re
+from typing import List
 import logging
 
 
@@ -24,10 +25,11 @@ class RedactingFormatter(logging.Formatter):
                             super().format(record), self.SEPARATOR)
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str) -> str:
     """function that returns the log message obfudcated"""
     for arg in fields:
-        message = re.sub(r'{}=.+?{}'.format(arg, separator),
-                         '{}={}{}'.format(arg, redaction, separator),
+        message = re.sub("{}=.*?{}".format(arg, separator),
+                         "{}={}{}".format(arg, redaction, separator),
                          message)
     return message
