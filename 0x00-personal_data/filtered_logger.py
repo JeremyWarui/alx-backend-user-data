@@ -7,6 +7,8 @@ filtered logger file for personal data
 import re
 from typing import List
 import logging
+PII_FIELDS = ("name", "email", "phone", "ssn", "password", "ip",
+              "last_login", "user_agent")
 
 
 class RedactingFormatter(logging.Formatter):
