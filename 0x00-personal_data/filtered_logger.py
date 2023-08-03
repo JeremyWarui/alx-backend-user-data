@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 filtered logger file for personal data
+1. class RedactingFormatter
+2. filter_datum function
 """
 import re
 from typing import List
@@ -14,7 +16,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields):
+    def __init__(self, fields: List[str]):
         """instantiate the Redacting formatter function"""
         self.fields = fields
         super(RedactingFormatter, self).__init__(self.FORMAT)
