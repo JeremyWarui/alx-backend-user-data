@@ -9,6 +9,6 @@ def filter_datum(fields, redaction, message, separator):
     """function that returns the log message obfudcated"""
     for arg in fields:
         message = re.sub(r'{}=.+?{}'.format(arg, separator),
-                         r'{}={}{}'.format(arg, redaction, separator),
+                         '{}={}{}'.format(arg, redaction, separator),
                          message)
     return message
