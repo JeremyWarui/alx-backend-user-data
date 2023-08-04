@@ -3,11 +3,14 @@
 filtered logger file for personal data
 1. class RedactingFormatter
 2. filter_datum function returning log message
-3. get_logger function returninh logging.Logger
+3. get_logger function returning logging.Logger
+4. get_db function that connects to MySQL database
 """
 import re
 from typing import List
 import logging
+import os
+import mysql.connector
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
@@ -48,3 +51,13 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(PII_FIELDS))
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """returns a mysql connector to the database"""
+    connect_to_db = mysql.connector.connection.MySQLConnection(
+            user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+            password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+            host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+            database=os.getenv("PERSONAL_DATA_DB_NAME"))
+    return connect_to_db
