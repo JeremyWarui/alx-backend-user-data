@@ -9,7 +9,7 @@ filtered logger file for personal data
 import re
 from typing import List
 import logging
-import os
+from os import getenv
 import mysql.connector
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -55,8 +55,8 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """returns a mysql connector to the database"""
-    return mysql.connector.connection.MySQLConnection(
-            user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
-            password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
-            host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
-            database=os.getenv("PERSONAL_DATA_DB_NAME"))
+    return mysql.connector.connect(
+            user=getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+            password=getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+            host=getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+            database=getenv("PERSONAL_DATA_DB_NAME"))
