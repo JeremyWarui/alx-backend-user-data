@@ -33,7 +33,7 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """adds a user to database and returns user object"""
-        user = User(email=email, hashed_password=hashed_password)
+        user = User(email, hashed_password)
         self._session.add(user)
         self._session.commit()
         return user
