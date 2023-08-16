@@ -10,7 +10,7 @@ class User(Base):
     """User model, with:
     id, email, hashed_password, session_id, reset_token
     as it attributes"""
-    __tablename__ = "Users"
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     email = Column(String(250), nullable=False)
     hashed_password = Column(String(250), nullable=False)
