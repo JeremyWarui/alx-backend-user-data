@@ -43,10 +43,6 @@ class DB:
         table as filtered by the method’s input arguments"""
         if not kwargs:
             raise InvalidRequestError
-        names = User.__table__.columns.keys()
-        for k in kwargs.keys():
-            if k not in names:
-                raise InvalidRequestError
         user = self._session.query(User).filter_by(**kwargs).first()
         if user is None:
             raise NoResultFound
