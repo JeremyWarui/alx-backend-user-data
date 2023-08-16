@@ -43,8 +43,7 @@ class DB:
         table as filtered by the method’s input arguments"""
         if kwargs is None:
             raise InvalidRequestError
-        try:
-            user = self._session.query(User).filter_by(**kwargs).first()
-            return user
-        except Exception:
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if user is None:
             raise NoResultFound
+        return user
