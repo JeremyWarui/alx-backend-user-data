@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""authentication model"""
+"""
+authentication model
+"""
+
 from typing import Union
 from uuid import uuid4
 from bcrypt import hashpw, gensalt, checkpw
