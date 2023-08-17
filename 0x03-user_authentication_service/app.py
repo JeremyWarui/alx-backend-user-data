@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 a basic flask app
+Start the home session
 """
 
 from flask import Flask, jsonify, request, abort
