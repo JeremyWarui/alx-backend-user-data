@@ -4,7 +4,7 @@ a basic flask app
 Start the home session
 """
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -19,7 +19,7 @@ def home():
 
 
 @app.route("/users", methods=["POST"], strict_slashes=False)
-def users():
+def users() -> str:
     """register a user/users"""
     email = request.form.get("email")
     passwd = request.form.get("password")
@@ -32,7 +32,7 @@ def users():
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login():
+def login() -> str:
     """login function on the app"""
     email = request.form.get("email")
     passwd = request.form.get("password")
@@ -46,6 +46,27 @@ def login():
     })
     response.set_cookie("session_id", session_id)
     return response
+
+
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+def logout() -> str:
+    """logout function"""
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id=session_id)
+    if not user or session_id is None:
+        abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect("/")
+
+
+@app.route("/profile", methods=["GET"], strict_slashes=False)
+def profile() -> str:
+    """profile function"""
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if not user or session_id is None:
+        abort(403)
+    return jsonify({"email": user.email}), 200
 
 
 if __name__ == "__main__":
