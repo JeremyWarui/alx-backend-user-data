@@ -87,10 +87,9 @@ class Auth:
         """checks if email exists, generate uuid and update the user's
         reset_token property and return the token"""
         try:
-            user = self._db.find_user_by(email)
-            if user:
-                token = _generate_uuid()
-                self._db.update_user(user.id, reset_token=token)
-                return token
-        except NoResultFound:
-            raise ValueError
+            user = self._db.find_user_by(email=email)
+        except NoResultFound as exc:
+            raise ValueError from exc
+        r_token = _generate_uuid()
+        self._db.update_user(user.id, reset_token=r_token)
+        return r_token
