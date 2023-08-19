@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-authentication model. 
+authentication model.
 Register user, create a session, check validation, destroy a session
 generate a uuid
 """
