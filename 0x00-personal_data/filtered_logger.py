@@ -76,9 +76,7 @@ def main():
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
-    fields = []
-    for i in cursor.description:
-        fields.append(i[0])
+    fields = [i[0] for i in cursor.description]
     log = get_logger()
     for row in cursor:
         str_row = "".join(f"{f}={str(r)}; " for r, f in zip(row, fields))
