@@ -11,6 +11,7 @@ from typing import List
 import logging
 from os import getenv
 import mysql.connector
+import bcrypt
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
@@ -66,6 +67,13 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             database=database
             )
     return conn
+
+
+def hash_password(password):
+    password = password.encode()
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password, salt)
+    return hashed_password
 
 
 def main():
