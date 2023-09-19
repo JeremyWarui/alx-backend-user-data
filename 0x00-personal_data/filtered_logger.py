@@ -76,6 +76,11 @@ def hash_password(password):
     return hashed_password
 
 
+def is_valid(hashed_password, password):
+    password = password.encode()
+    return bcrypt.checkpw(password, hashed_password)
+
+
 def main():
     """takes no arguments and returns nothing.
     It obtains a database connection using get_db and
